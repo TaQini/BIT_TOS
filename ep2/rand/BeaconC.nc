@@ -9,6 +9,8 @@ module BeaconC{
 	uses interface SplitControl as AMControl;
 	uses interface Packet as AMPacket;	
 	uses interface AMSend;
+
+	uses interface Random;
 }
 
 implementation{
@@ -36,9 +38,9 @@ implementation{
 		// if serial number is gearter than 60, node 0 stop sending msg
 			BeaconMsg* SendMsg=(BeaconMsg*)call AMSend.getPayload(&pkt,sizeof(BeaconMsg));
 			
-			SendMsg->pkt_No = cnt; 
+			SendMsg->pkt_No = call Random.rand16() % 100; 
 			
-			if(call AMSend.send(AM_BROADCAST_ADDR,&pkt,sizeof(BeaconMsg))!=SUCCESS){
+			if(call AMSend.send(1,&pkt,sizeof(BeaconMsg))!=SUCCESS){
 				SendBusy=FALSE;
 			}
 			else{ // Success
