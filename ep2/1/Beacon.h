@@ -8,13 +8,13 @@ enum{
 	TIMER_PERIOD_MILLI=1000	
 };
 
-typedef nx_struct BeaconMsg{
+typedef nx_struct TemperMsg{
 	nx_uint8_t temper;
-}BeaconMsg;
+}TemperMsg;
 
 typedef nx_struct RandMsg{
 	nx_uint8_t random;
-	nx_uint8_t padding; // let len(BeaconMsg) != len(RandMsg)
+	nx_uint16_t padding; // let len(BeaconMsg) != len(RandMsg)
 }RandMsg;
 
 typedef nx_struct BaseStationMsg{

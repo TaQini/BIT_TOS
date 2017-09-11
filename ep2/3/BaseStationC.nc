@@ -15,6 +15,11 @@ module BaseStationC{
 implementation{
 	message_t pkt;
 
+	/////////////
+	int debug = 1;
+	char debug_msg[] = "[temp]";
+	/////////////
+
 	event void Boot.booted(){
 		call AMControl.start();
 	}
@@ -30,10 +35,18 @@ implementation{
 	event message_t* AMReceive.receive(message_t* msg,void* p,uint8_t len){
 		if(len==sizeof(BaseStationMsg)){
 			BaseStationMsg* receiveMsg=(BaseStationMsg*)p;
-			printf("///////////////////////////\n");
-			printf("pkt_No: %d\n",receiveMsg->pkt_No);
+
+			if (receiveMsg->sensor_No == 2){
+				debug_msg[1] = 'r';
+				debug_msg[2] = 'a';
+				debug_msg[3] = 'n';
+				debug_msg[4] = 'd';
+			}
+			
+			printf("///[%d]//%s//////////////\n",debug++,debug_msg);
+			printf("data: %d\n",receiveMsg->data);
 			printf("sensor_No: %d\n",receiveMsg->sensor_No);
-			printf("///////////////////////////\n");
+			printf("/////////////////////////////\n\n");
 			printfflush();
 		}
 		return msg;

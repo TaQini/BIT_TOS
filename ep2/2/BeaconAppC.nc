@@ -8,20 +8,14 @@ implementation{
 
 	components ActiveMessageC;
 	components new AMSenderC(AM_BEACON);
-	
-	BeaconC.Boot->MainC;
+  	components new AMReceiverC(AM_BEACON);
 
-	BeaconC.Timer0->Timer0;
+	BeaconC.Boot->MainC;
 	
+	BeaconC.Timer0->Timer0;
 	BeaconC.AMPacket->ActiveMessageC;	
 	BeaconC.AMControl->ActiveMessageC;
+
 	BeaconC.AMSend->AMSenderC;
-
-	// random
-	components RandomC;
-	BeaconC.Random -> RandomC;
-
-	// temper
-	components new SensirionSht11C() as Sense;
-	BeaconC.Read-> Sense.Temperature;
+    BeaconC.AMReceive->AMReceiverC;
 }
