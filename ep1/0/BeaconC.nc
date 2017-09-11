@@ -32,16 +32,18 @@ implementation{
 	event void AMControl.stopDone(error_t err){}
 	
 	event void Timer0.fired(){
-		BeaconMsg* SendMsg=(BeaconMsg*)call AMSend.getPayload(&pkt,sizeof(BeaconMsg));
-		
-		SendMsg->pkt_No = cnt;
-		
-		if(call AMSend.send(AM_BROADCAST_ADDR,&pkt,sizeof(BeaconMsg))!=SUCCESS){
-			SendBusy=FALSE;
-		}
-		else{
-			SendBusy=TRUE;
-			cnt += 1;
+		if (cnt < 60){
+			BeaconMsg* SendMsg=(BeaconMsg*)call AMSend.getPayload(&pkt,sizeof(BeaconMsg));
+			
+			SendMsg->pkt_No = cnt;
+			
+			if(call AMSend.send(AM_BROADCAST_ADDR,&pkt,sizeof(BeaconMsg))!=SUCCESS){
+				SendBusy=FALSE;
+			}
+			else{
+				SendBusy=TRUE;
+				cnt += 1;
+			}		
 		}
 	}
 

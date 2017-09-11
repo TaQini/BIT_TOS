@@ -5,7 +5,7 @@
 
 enum{
 	AM_BEACON=0xC8,
-	TIMER_PERIOD_MILLI=8000	
+	TIMER_PERIOD_MILLI=1000	
 };
 
 typedef nx_struct BeaconMsg{

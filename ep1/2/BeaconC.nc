@@ -57,9 +57,7 @@ implementation{
 	event message_t* AMReceive.receive(message_t* msg, void* payload, uint8_t len){
 	if (len == sizeof(BeaconMsg)) {
     	BeaconMsg* btrpkt = (BeaconMsg*)payload;
-    	if (!(btrpkt->pkt_No & 1)){
-	    	pkt_No = btrpkt->pkt_No;
-    	}
+    	pkt_No = btrpkt->pkt_No;
     }
     return msg;
   }
