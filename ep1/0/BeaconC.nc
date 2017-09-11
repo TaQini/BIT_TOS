@@ -38,10 +38,10 @@ implementation{
 		
 		if(call AMSend.send(1,&pkt,sizeof(BeaconMsg))!=SUCCESS){
 			SendBusy=FALSE;
-			cnt += 1;
 		}
 		else{
 			SendBusy=TRUE;
+			cnt += 1;
 		}
 	}
 

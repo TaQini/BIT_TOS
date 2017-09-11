@@ -1,11 +1,11 @@
 <tos_image>
   <ident>
-    <uidhash>9AF3BA3DL</uidhash>
+    <uidhash>6E4FC35FL</uidhash>
     <hostname>tos211-vpc</hostname>
     <username>root</username>
     <appname>BaseStationAppC</appname>
     <userhash>C229B721L</userhash>
-    <timestamp>59B64640L</timestamp>
+    <timestamp>59B6550FL</timestamp>
     <deluge_support>no</deluge_support>
     <platform>telosb</platform>
   </ident>
