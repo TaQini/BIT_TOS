@@ -36,7 +36,7 @@ implementation{
 		
 		SendMsg->pkt_No = cnt;
 		
-		if(call AMSend.send(1,&pkt,sizeof(BeaconMsg))!=SUCCESS){
+		if(call AMSend.send(AM_BROADCAST_ADDR,&pkt,sizeof(BeaconMsg))!=SUCCESS){
 			SendBusy=FALSE;
 		}
 		else{
