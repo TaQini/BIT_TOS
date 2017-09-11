@@ -36,17 +36,19 @@ implementation{
 	event void AMControl.stopDone(error_t err){}	
 	
 	event void Timer0.fired(){
-		
-		BaseStationMsg* SendMsg=(BaseStationMsg*)call AMSend.getPayload(&pkt,sizeof(BaseStationMsg));
+///////////////////////////////////////////
+		if( (pkt_No%2)!=0 ){
+			BaseStationMsg* SendMsg=(BaseStationMsg*)call AMSend.getPayload(&pkt,sizeof(BaseStationMsg));
 ///////////////////////////////////////////////////////////////////
-		SendMsg->pkt_No = pkt_No;
-		SendMsg->sensor_No = TOS_NODE_ID; 
+			SendMsg->pkt_No = pkt_No;
+			SendMsg->sensor_No = TOS_NODE_ID; 
 ///////////set pkt_No and sensor_No, then sent them to 2 //////////
-		if(call AMSend.send(3,&pkt,sizeof(BaseStationMsg))!=SUCCESS){
-			SendBusy=FALSE; 
-		}
-		else{
-			SendBusy=TRUE;
+			if(call AMSend.send(3,&pkt,sizeof(BaseStationMsg))!=SUCCESS){
+				SendBusy=FALSE; 
+			}
+			else{
+				SendBusy=TRUE;
+			}
 		}
 	}
 
