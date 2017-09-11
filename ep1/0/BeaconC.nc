@@ -12,8 +12,8 @@ module BeaconC{
 }
 
 implementation{
-	message_t pkt;
-	size_t cnt = 1;
+	message_t pkt; 
+	nx_uint8_t cnt = 1; // the increasing serial number
 	bool SendBusy=FALSE;
 	
 	event void Boot.booted(){
@@ -32,17 +32,18 @@ implementation{
 	event void AMControl.stopDone(error_t err){}
 	
 	event void Timer0.fired(){
-		if (cnt <= 60){
+		if (cnt <= 60){ 
+		// if serial number is gearter than 60, node 0 stop sending msg
 			BeaconMsg* SendMsg=(BeaconMsg*)call AMSend.getPayload(&pkt,sizeof(BeaconMsg));
 			
-			SendMsg->pkt_No = cnt;
+			SendMsg->pkt_No = cnt; 
 			
 			if(call AMSend.send(AM_BROADCAST_ADDR,&pkt,sizeof(BeaconMsg))!=SUCCESS){
 				SendBusy=FALSE;
 			}
-			else{
+			else{ // Success
 				SendBusy=TRUE;
-				cnt += 1;
+				cnt += 1; // increase cnt
 			}		
 		}
 	}

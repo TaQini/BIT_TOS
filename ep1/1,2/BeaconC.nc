@@ -1,6 +1,6 @@
-// Sensor 1
-// recvie 2 msg 
-// send msg+sensor_id to 0
+// Sensor 1,2 
+// recvie serial number from 0 
+// send SN+sensor_id to 3
 #include "Timer.h"
 #include "Beacon.h"
 #include "printf.h"
@@ -17,8 +17,7 @@ module BeaconC{
 implementation{
 	message_t pkt;
 	bool SendBusy=FALSE;
-	bool NewPkt = FALSE; // if No new pkt, then do not send data
-
+	bool NewPkt = FALSE; // if there r NO new pkt, stop sending data
 	nx_uint8_t pkt_No;
 	
 	event void Boot.booted(){
@@ -49,7 +48,7 @@ implementation{
 			if(call AMSend.send(3,&pkt,sizeof(BaseStationMsg))!=SUCCESS){
 				SendBusy=FALSE; 
 			}
-			else{
+			else{ // Success
 				SendBusy=TRUE;
 				NewPkt = FALSE;
 			}
@@ -65,11 +64,9 @@ implementation{
 	event message_t* AMReceive.receive(message_t* msg, void* payload, uint8_t len){
 	if (len == sizeof(BeaconMsg)) {
     	BeaconMsg* btrpkt = (BeaconMsg*)payload;
-    	pkt_No = btrpkt->pkt_No;
-		NewPkt = TRUE;
+    	pkt_No = btrpkt->pkt_No; // use local var to stroage SN from 0
+		NewPkt = TRUE; // when sensor 1,2 receive a pkt successfully, set NewPkt to TRUE
     }
-
-
     return msg;
   }
 }

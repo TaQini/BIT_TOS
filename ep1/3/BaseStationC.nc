@@ -1,3 +1,5 @@
+// Snosor 3 
+// Recv msg from 1,2
 #include "Timer.h"
 #include "Beacon.h"
 #include "printf.h"
@@ -35,6 +37,5 @@ implementation{
 			printfflush();
 		}
 		return msg;
-	}
-	
+	}	
 }
