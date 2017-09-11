@@ -13,7 +13,7 @@ module BeaconC{
 
 implementation{
 	message_t pkt;
-	size_t cnt = 0;
+	size_t cnt = 1;
 	bool SendBusy=FALSE;
 	
 	event void Boot.booted(){
@@ -32,7 +32,7 @@ implementation{
 	event void AMControl.stopDone(error_t err){}
 	
 	event void Timer0.fired(){
-		if (cnt < 60){
+		if (cnt <= 60){
 			BeaconMsg* SendMsg=(BeaconMsg*)call AMSend.getPayload(&pkt,sizeof(BeaconMsg));
 			
 			SendMsg->pkt_No = cnt;

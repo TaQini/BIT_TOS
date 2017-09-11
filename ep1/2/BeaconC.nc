@@ -1,3 +1,6 @@
+// Sensor 1
+// recvie 2 msg 
+// send msg+sensor_id to 0
 #include "Timer.h"
 #include "Beacon.h"
 #include "printf.h"
@@ -14,6 +17,7 @@ module BeaconC{
 implementation{
 	message_t pkt;
 	bool SendBusy=FALSE;
+	bool NewPkt = FALSE; // if No new pkt, then do not send data
 
 	nx_uint8_t pkt_No;
 	
@@ -32,18 +36,22 @@ implementation{
 	
 	event void AMControl.stopDone(error_t err){}	
 	
-	event void Timer0.fired(){	
-		if (! (pkt_No & 1)){
+	event void Timer0.fired(){
+		if( (!((pkt_No ^ TOS_NODE_ID) & 1)) && NewPkt){
+			// when pkt_no and sennor_No are both odd or even, send the pkt
 			BaseStationMsg* SendMsg=(BaseStationMsg*)call AMSend.getPayload(&pkt,sizeof(BaseStationMsg));
-			///////////////////////////////////////////////////////////////////
+			
+			// set pkt_No and sensor_No  
 			SendMsg->pkt_No = pkt_No;
 			SendMsg->sensor_No = TOS_NODE_ID; 
-			///////////set pkt_No and sensor_No, then sent them to 2 //////////
+			
+			// sent pkt to 3
 			if(call AMSend.send(3,&pkt,sizeof(BaseStationMsg))!=SUCCESS){
 				SendBusy=FALSE; 
 			}
 			else{
 				SendBusy=TRUE;
+				NewPkt = FALSE;
 			}
 		}
 	}
@@ -58,7 +66,10 @@ implementation{
 	if (len == sizeof(BeaconMsg)) {
     	BeaconMsg* btrpkt = (BeaconMsg*)payload;
     	pkt_No = btrpkt->pkt_No;
+		NewPkt = TRUE;
     }
+
+
     return msg;
   }
 }
