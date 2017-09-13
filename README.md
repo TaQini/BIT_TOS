@@ -1,11 +1,16 @@
 # BIT\_TOS
 ep of tos in bit
 
-## EP1
- - Sensor0: Send data to 1,2
+## script
+ - `$ m.sh node\_id`
+ > build and download to sensor
 
- - Sensor1: Recv data from 0, then Send data to 3
+ - `$ s.sh port`
+ > print data from port
 
- - Sensor2: Recv data from 0, then Send data to 3
+ - `$ l.sh port`
+ > print data in hex
 
- - Sensor3: Recv data from 1,2
+ - `dl.sh`
+ > rsyn code from remote repo
+
