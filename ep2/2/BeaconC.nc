@@ -21,7 +21,7 @@ implementation{
 	nx_uint8_t random;
 
 	////////
-	int debug = 100;
+	// int debug = 100;
 	///////
 
 	event void Boot.booted(){
@@ -67,11 +67,11 @@ implementation{
 	if (len == sizeof(RandMsg)) { 
     	RandMsg* btrpkt = (RandMsg*)payload;
     	random = btrpkt->random; // use local var to stroage SN from 0
-    	printf("%s\n", "///////////////////////////");
-    	printf("[%d] %d \n", debug, random);
-    	printf("%s\n", "///////////////////////////");
 		NewPkt = TRUE; // when sensor 1,2 receive a pkt successfully, set NewPkt to TRUE
-		debug ++;
+  //   	printf("%s\n", "///////////////////////////");
+  //   	printf("[%d] %d \n", debug, random);
+  //   	printf("%s\n", "///////////////////////////");
+		// debug ++;
     }
     return msg;
   }

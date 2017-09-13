@@ -21,7 +21,7 @@ implementation{
 	nx_uint8_t temper;
 
 	////////
-	int debug = 0;
+	// int debug = 0;
 	///////
 
 	event void Boot.booted(){
@@ -67,11 +67,11 @@ implementation{
 	if (len == sizeof(TemperMsg)) { 
     	TemperMsg* btrpkt = (TemperMsg*)payload;
     	temper = btrpkt->temper; // use local var to stroage SN from 0
-    	printf("%s\n", "///////////////////////////");
-    	printf("[%d] %d \n", debug, temper);
-    	printf("%s\n", "///////////////////////////");
+    	// printf("%s\n", "///////////////////////////");
+    	// printf("[%d] %d \n", debug, temper);
+    	// printf("%s\n", "///////////////////////////");
+		// debug ++;
 		NewPkt = TRUE; // when sensor 1,2 receive a pkt successfully, set NewPkt to TRUE
-		debug ++;
     }
     return msg;
   }
